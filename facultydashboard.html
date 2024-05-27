@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://res.cloudinary.com/dsox9poty/image/upload/v1716082684/cgl4odix03jdy8e7oilv.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            color: #ddd; 
+        }
+        .faculty-heading {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color:antiquewhite; 
+            text-shadow: 2px 2px 4px rgba(93, 89, 89, 0.451);
+        }
+        .subject-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .subject-box {
+            display: inline-block;
+            width: calc(20% - 20px);
+            height: 120px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 15px; 
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease; 
+        }
+        .subject-box:hover {
+            transform: scale(1.05); 
+        }
+        .upload-button {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            background: #555; 
+            color: #fff; 
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .upload-button:hover {
+            background: #777; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="faculty-heading">Welcome To Faculty Dashboard</h2>
+        <p class="student-name" id="studentName">Hi, <span id="userNamePlaceholder"></span></p>
+        <div class="subject-boxes">
+
+           
+            
+            <div class="subject-box">
+                <p style="color: #333;">CS_00 - Logical</p>
+                <button class="upload-button" onclick="openUploadWindow('Logical', 'CS_00')">Upload Questions</button>
+            </div>
+            
+            <div class="subject-box">
+                <p style="color: #333;">CS_01 - Verbal</p>
+                <button class="upload-button" onclick="openUploadWindow('Verbal', 'CS_01')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_02 - Aptitude</p>
+                <button class="upload-button" onclick="openUploadWindow('Aptitude', 'CS_02')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_03 - C++</p>
+                <button class="upload-button" onclick="openUploadWindow('C++', 'CS_03')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_04 - Python</p>
+                <button class="upload-button" onclick="openUploadWindow('Python', 'CS_04')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_05 - Digital Logic and design</p>
+                <button class="upload-button" onclick="openUploadWindow('Digital Logic and Design', 'CS_05')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_06 - Data extraction and processing</p>
+                <button class="upload-button" onclick="openUploadWindow('Data extraction and processing', 'CS_06')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_07 - Computer Networks</p>
+                <button class="upload-button" onclick="openUploadWindow('Computer Networks', 'CS_07')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_08 - Data Structures and Algorithms</p>
+                <button class="upload-button" onclick="openUploadWindow('Data Structures and Algorithms', 'CS_08')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_09 - Design and Analysis of Algorithms</p>
+                <button class="upload-button" onclick="openUploadWindow('Design and Analysis of Algorithms', 'CS_09')">Upload Questions</button>
+            </div>
+             <div class="subject-box">
+                <p style="color: #333;">CS_10 - Database Management System</p>
+                <button class="upload-button" onclick="openUploadWindow('Database Management System', 'CS_10')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_11 - JAVA</p>
+                <button class="upload-button" onclick="openUploadWindow('JAVA', 'CS_11')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_12 - Web Programming</p>
+                <button class="upload-button" onclick="openUploadWindow('Web Programming', 'CS_12')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_13 - Theory of Computation</p>
+                <button class="upload-button" onclick="openUploadWindow('Theory of Computation', 'CS_13')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_14 - Computer Organization and Architecture</p>
+                <button class="upload-button" onclick="openUploadWindow('Computer Organization and Architecture', 'CS_14')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_15 - Operating System</p>
+                <button class="upload-button" onclick="openUploadWindow('Operating System', 'CS_15')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_16 - Compiler Design</p>
+                <button class="upload-button" onclick="openUploadWindow('Compiler Design', 'CS_16')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_17 - Discrete Maths</p>
+                <button class="upload-button" onclick="openUploadWindow('Discrete Maths', 'CS_17')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_18 - AI/ML</p>
+                <button class="upload-button" onclick="openUploadWindow('AI/ML', 'CS_18')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_19 - Distributed Computing</p>
+                <button class="upload-button" onclick="openUploadWindow('Distributed Computing', 'CS_19')">Upload Questions</button>
+            </div>
+
+            <div class="subject-box">
+                <p style="color: #333;">CS_20 - IOT and its applications</p>
+                <button class="upload-button" onclick="openUploadWindow('IOT and its applications', 'CS_20')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_21 - Microservices</p>
+                <button class="upload-button" onclick="openUploadWindow('Microservices', 'CS_21')">Upload Questions</button>
+            </div>
+            <div class="subject-box">
+                <p style="color: #333;">CS_22 - Cybersecurity</p>
+                <button class="upload-button" onclick="openUploadWindow('Cybersecurity', 'CS_22')">Upload Questions</button>
+            </div>
+
+        </div>
+        <form id="newsForm" style="margin-top: 20px;">
+            <h2 style="color: black;">News</h2>
+            <label for="title" style="color: black; font-size: 18px;">Title:</label><br>
+            <input type="text" id="title" name="title" required style="width: 50%; padding: 5px;"><br>
+            <label for="description" style="color: black; font-size: 18px;">Description:</label><br>
+            <textarea id="description" name="description" required style="width: 50%; padding: 5px;"></textarea><br>
+            <button type="submit" style="background-color: #555; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Add News</button>
+        </form>
+        
+    </div>
+    <script>
+        function setUserName(name) {
+            document.getElementById('userNamePlaceholder').innerText = name;
+        }
+        
+
+        fetch('/dashboard')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    setUserName(data.user.name);
+                } else {
+                    console.error(data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+            function openUploadWindow(subject, subjectID) {
+            const uploadWindowTitle = `Upload Questions for ${subject}`;
+            const screenWidth = screen.width;
+            const screenHeight = screen.height;
+            const uploadWindow = window.open('', uploadWindowTitle, `width=${screenWidth},height=${screenHeight},scrollbars=yes,resizable=yes`);
+            uploadWindow.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Upload Questions - ${subject}</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background: linear-gradient(to right, #6a11cb, #2575fc);
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                }
+                form {
+                    background: #fff;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    width: 100%;
+                    max-width: 600px;
+                    box-sizing: border-box;
+                }
+                h2 {
+                    text-align: center;
+                    color: #333;
+                    margin-bottom: 20px;
+                }
+                label {
+                    display: block;
+                    margin-bottom: 10px;
+                    font-weight: bold;
+                    color: #333;
+                }
+                input[type="text"],
+                input[type="number"] {
+                    width: calc(100% - 24px);
+                    padding: 8px; 
+                    margin-bottom: 16px; 
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    box-sizing: border-box;
+                }
+                input[type="submit"] {
+                    background: #007bff;
+                    color: #fff;
+                    border: none;
+                    padding: 12px; 
+                    cursor: pointer;
+                    font-size: 18px;
+                    border-radius: 5px;
+                    width: 100%;
+                    transition: background 0.3s ease;
+                }
+                input[type="submit"]:hover {
+                    background: #0056b3;
+                }
+            </style>
+        </head>
+        <body>
+            <form action="/upload" method="POST">
+                <h2>Upload Questions for ${subject}</h2>
+                <label for="question">Enter Question:</label>
+                <input type="text" id="question" name="question" required>
+
+                <label for="option1">Option 1:</label>
+                <input type="text" id="option1" name="option1" required>
+
+                <label for="option2">Option 2:</label>
+                <input type="text" id="option2" name="option2" required>
+
+                <label for="option3">Option 3:</label>
+                <input type="text" id="option3" name="option3" required>
+
+                <label for="option4">Option 4:</label>
+                <input type="text" id="option4" name="option4" required>
+
+                <label for="correctAnswer">Correct Answer (Option Number):</label>
+                <input type="number" id="correctAnswer" name="correctAnswer" min="1" max="4" required>
+
+                <label for="question_type">Question Type:</label>
+                <input type="text" id="question_type" name="question_type" value="${subjectID}" required readonly>
+
+                <input type="submit" value="Submit">
+            </form>
+        </body>
+        </html>`);
+        uploadWindow.document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(this); 
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Questions uploaded successfully!');
+                uploadWindow.document.getElementById('uploadForm').reset();
+            } else {
+                alert('Failed to upload questions. Please try again.');
+            }
+        })
+        .catch(error => console.error('Error uploading questions:', error));
+    });
+        }
+document.getElementById('newsForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this); 
+    fetch('/uploadNews', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('News uploaded successfully!');
+            document.getElementById('newsForm').reset();
+        } else {
+            alert('Failed to upload news. Please try again.');
+        }
+    })
+    .catch(error => console.error('Error uploading news:', error));
+});
+
+    </script>
+</body>
+</html>
