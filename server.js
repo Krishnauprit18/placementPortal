@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mysql = require('mysql');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 const app = express();
 const dotenv = require('dotenv');
@@ -14,7 +14,7 @@ const upload = multer({ dest: 'uploads/' });
 dotenv.config();
 const encodeURL = bodyParser.urlencoded({ extended: false });
 
-app.use(express.static(path.join(__dirname, 'NMIMS_PLACEMENT_PORTAL')));
+app.use(express.static(path.join(__dirname, 'placementPortal')));
 
 cloudinary.config({
     cloud_name: 'dfl7exztb',
@@ -26,19 +26,26 @@ const background_image_url = 'https://res.cloudinary.com/dfl7exztb/image/upload/
 
 const nmims_logo_url = 'https://res.cloudinary.com/dfl7exztb/image/upload/v1716112179/cgbbdp6k9fv6kfneshgf.jpg';
 
+// Serve static files from the 'public' folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Define routes
 app.get('/register.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'register.html'));
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
 });
+
 app.get('/studentdashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'studentdashboard.html'));
+    res.sendFile(path.join(__dirname, 'public', 'studentdashboard.html'));
 });
 
 app.get('/facultydashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'facultydashboard.html'));
+    res.sendFile(path.join(__dirname, 'public', 'facultydashboard.html'));
 });
+
 app.get('/result.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'result.html'));
+    res.sendFile(path.join(__dirname, 'public', 'result.html'));
 });
+
 app.use(session({
     secret: process.env.SECRET_SESSION,
     saveUninitialized: true,
@@ -50,8 +57,8 @@ app.use(cookieParser());
 
 const con = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "root",
+    user: "krishnauprit",
+    password: "mysql376",
     database: "student_db"
 });
 
@@ -63,7 +70,7 @@ con.connect(function(err) {
     console.log('Connected to database as id ' + con.threadId);
 });
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/login.html');
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.post('/register.html', encodeURL, async (req, res) => {
@@ -77,10 +84,10 @@ app.post('/register.html', encodeURL, async (req, res) => {
         }
 
         if (result.length > 0) {
-            res.sendFile(__dirname + '/fail_reg.html');
-        } else {
+            res.sendFile(path.join(__dirname, 'public', 'fail_reg.html')); 
+       } else {
             if (password.length < 8) {
-                res.sendFile(__dirname + '/fail_reg.html');
+                res.sendFile(path.join(__dirname, 'public', 'fail_reg.html'));
                 return;
             }
 
@@ -126,7 +133,7 @@ app.post('/register.html', encodeURL, async (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-    res.sendFile(__dirname + "/login.html");
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.post("/dashboard", encodeURL, (req, res) => {
@@ -135,7 +142,7 @@ app.post("/dashboard", encodeURL, (req, res) => {
     con.query(`SELECT * FROM users WHERE username = '${username}'`, async function(err, result) {
         if (err) {
             console.error('Error querying data: ' + err.stack);
-            res.sendFile(__dirname + '/fail_login.html');
+            res.sendFile(path.join(__dirname + 'public', '/fail_login.html'));
             return;
         }
         if (result.length > 0) {
@@ -148,13 +155,13 @@ app.post("/dashboard", encodeURL, (req, res) => {
                 } else if (user.userType === 'faculty') {
                     res.redirect('/facultydashboard');
                 } else {
-                    res.sendFile(__dirname + '/fail_login.html');
+                    res.sendFile(path.join(__dirname , 'public', '/fail_login.html'));
                 }
             } else {
-                res.sendFile(__dirname + '/fail_login.html');
+                res.sendFile(path.join(__dirname, 'public', '/fail_login.html'));
             }
         } else {
-            res.sendFile(__dirname + '/fail_login.html');
+            res.sendFile(path.join(__dirname + 'public', '/fail_login.html'));
         }
     });
 });
