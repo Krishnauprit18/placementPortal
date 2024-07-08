@@ -10,9 +10,27 @@ const dotenv = require('dotenv');
 const fs=require('fs');
 const {v2:cloudinary} = require('cloudinary');
 const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
 dotenv.config();
 const encodeURL = bodyParser.urlencoded({ extended: false });
+
+// Multer disk storage configuration
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '/tmp/uploads'); // Store files in /tmp/uploads
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // Use original file name
+    }
+});
+
+// Multer upload configuration
+const upload = multer({ storage: storage });
+
+// Example route for file upload
+app.post('/upload', upload.single('file'), (req, res) => {
+    // Handle file upload
+    res.send('File uploaded successfully');
+});
 
 app.use(express.static(path.join(__dirname, 'placementPortal')));
 
