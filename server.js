@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const app = express();
@@ -40,6 +40,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+
 const background_image_url = process.env.BACKGROUND_IMAGE_URL;
 const nmims_logo_url = process.env.NMIMS_LOGO_URL;
 
@@ -72,11 +73,35 @@ app.use(session({
 
 app.use(cookieParser());
 
-const con = mysql.createConnection({
+const con = mysql.createPool({
+
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
+con.on('error', (err) => {
+    console.error("MySQL pool error", err.message);
+    if(err.code === "PROTOCOL_CONNECTION_LOST"){
+        console.log('Attempting to reconnect...');
+        con.end();
+        con = mysql.createPool({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        });
+    }
+    else{
+        throw err;
+    }
 });
 
 con.connect(function(err) {
@@ -112,6 +137,7 @@ app.post('/register.html', encodeURL, async (req, res) => {
             con.query(sql, [name, email, username, hashedPassword, userType], function(err, result) {
                 if (err) {
                     console.error(err);
+                    res.status(500).send('Error registering user.');
                     return;
                 }
                 res.send(`
