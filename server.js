@@ -17,14 +17,13 @@ const encodeURL = bodyParser.urlencoded({ extended: false });
 app.use(express.static(path.join(__dirname, 'placementPortal')));
 
 cloudinary.config({
-    cloud_name: 'dfl7exztb',
-    api_key: '229896612154869',
-    api_secret: 'CfuGkcYcP0h0WjXMnY3Z7IcrYJM'
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const background_image_url = 'https://res.cloudinary.com/dfl7exztb/image/upload/v1716112094/seaw333c7yrbdfhbbv3t.jpg';
-
-const nmims_logo_url = 'https://res.cloudinary.com/dfl7exztb/image/upload/v1716112179/cgbbdp6k9fv6kfneshgf.jpg';
+const background_image_url = process.env.BACKGROUND_IMAGE_URL;
+const nmims_logo_url = process.env.NMIMS_LOGO_URL;
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -56,10 +55,10 @@ app.use(session({
 app.use(cookieParser());
 
 const con = mysql.createConnection({
-    host: "localhost",
-    user: "krishnauprit",
-    password: "mysql376",
-    database: "student_db"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 con.connect(function(err) {
