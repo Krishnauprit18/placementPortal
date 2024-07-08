@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const app = express();
@@ -10,27 +10,9 @@ const dotenv = require('dotenv');
 const fs=require('fs');
 const {v2:cloudinary} = require('cloudinary');
 const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 dotenv.config();
 const encodeURL = bodyParser.urlencoded({ extended: false });
-
-// Multer disk storage configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '/tmp/uploads'); // Store files in /tmp/uploads
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname); // Use original file name
-    }
-});
-
-// Multer upload configuration
-const upload = multer({ storage: storage });
-
-// Example route for file upload
-app.post('/upload', upload.single('file'), (req, res) => {
-    // Handle file upload
-    res.send('File uploaded successfully');
-});
 
 app.use(express.static(path.join(__dirname, 'placementPortal')));
 
@@ -39,7 +21,6 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-
 
 const background_image_url = process.env.BACKGROUND_IMAGE_URL;
 const nmims_logo_url = process.env.NMIMS_LOGO_URL;
@@ -73,35 +54,11 @@ app.use(session({
 
 app.use(cookieParser());
 
-const con = mysql.createPool({
-
+const con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
-
-con.on('error', (err) => {
-    console.error("MySQL pool error", err.message);
-    if(err.code === "PROTOCOL_CONNECTION_LOST"){
-        console.log('Attempting to reconnect...');
-        con.end();
-        con = mysql.createPool({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            waitForConnections: true,
-            connectionLimit: 10,
-            queueLimit: 0
-        });
-    }
-    else{
-        throw err;
-    }
+    database: process.env.DB_NAME
 });
 
 con.connect(function(err) {
@@ -137,7 +94,6 @@ app.post('/register.html', encodeURL, async (req, res) => {
             con.query(sql, [name, email, username, hashedPassword, userType], function(err, result) {
                 if (err) {
                     console.error(err);
-                    res.status(500).send('Error registering user.');
                     return;
                 }
                 res.send(`
@@ -307,7 +263,7 @@ app.post('/uploadNews', upload.single('image'), (req, res) => {
     }
 
     // Save news data to the database
-    const sql = 'INSERT INTO news (title, description) VALUES (?, ?)';
+    const sql = 'INSERT INTO news (title, description, image_url) VALUES (?, ?, ?)';
     const values = [title, description, image_url || null]; // Use null if image_url is not provided
     con.query(sql, values, (err, result) => {
         if (err) {
