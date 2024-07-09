@@ -254,7 +254,7 @@ function evaluateAnswers(answers, correctAnswers) {
 // POST endpoint to handle news upload
 app.post('/uploadNews', upload.single('image'), (req, res) => {
     // Extract data from the request
-    const { title, description, image_url } = req.body;
+    const { title, description } = req.body;
     const image = req.file; // Uploaded image file
 
     // Validate required fields
@@ -263,8 +263,8 @@ app.post('/uploadNews', upload.single('image'), (req, res) => {
     }
 
     // Save news data to the database
-    const sql = 'INSERT INTO news (title, description, image_url) VALUES (?, ?, ?)';
-    const values = [title, description, image_url || null]; // Use null if image_url is not provided
+    const sql = 'INSERT INTO news (title, description) VALUES (?, ?)';
+    const values = [title, description || null]; // Use null if image_url is not provided
     con.query(sql, values, (err, result) => {
         if (err) {
             console.error('Error uploading news:', err);
