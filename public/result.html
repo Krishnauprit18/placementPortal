@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #f0f0f0;
+            position: "relative";
         }
         .question-item {
             background: #fff;
@@ -28,9 +29,24 @@
         .wrong {
             color: red;
         }
+        .back-button{
+            position: "absolute";
+            top: 20px;
+            left: 20px;
+            background-color: #007bff;
+            color: while;
+            border: none;
+            padding: 10px, 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button:hover{
+                background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    <button onCLick = "goBackToDashboard()">Back to Dashboard</button>
     <h1>Questions <small id="questionType"></small></h1>
     <div id="questionsContainer"></div>
 
@@ -107,6 +123,10 @@
                 viewAnswerButton.style.display = 'none';
             }
         });
+
+        function goBackToDashboard(){
+            window.location.href = '/studentdashboard.html';
+        }
     </script>
 </body>
 </html>
