@@ -141,7 +141,7 @@ app.post("/dashboard", encodeURL, (req, res) => {
     con.query(`SELECT * FROM users WHERE username = '${username}'`, async function(err, result) {
         if (err) {
             console.error('Error querying data: ' + err.stack);
-            res.sendFile(path.join(__dirname + 'public', '/fail_login.html'));
+            res.sendFile(path.join(__dirname , 'public', '/fail_login.html'));
             return;
         }
         if (result.length > 0) {
@@ -160,7 +160,7 @@ app.post("/dashboard", encodeURL, (req, res) => {
                 res.sendFile(path.join(__dirname, 'public', '/fail_login.html'));
             }
         } else {
-            res.sendFile(path.join(__dirname + 'public', '/fail_login.html'));
+            res.sendFile(path.join(__dirname ,'public', '/fail_login.html'));
         }
     });
 });
