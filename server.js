@@ -28,7 +28,7 @@ const nmims_logo_url = process.env.NMIMS_LOGO_URL;
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Define routes
+// Defined routes
 app.get('/register.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
 });
@@ -255,7 +255,7 @@ function evaluateAnswers(answers, correctAnswers) {
 app.post('/uploadNews', upload.single('image'), (req, res) => {
     // Extract data from the request
     const { title, description } = req.body;
-    const image = req.file; // Uploaded image file
+    const image = req.file; 
 
     // Validate required fields
     if (!title || !description) {
